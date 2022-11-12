@@ -7,7 +7,6 @@ int main (){
 //comentário de linha 	
 	
 	int numeroSecreto = 3;
-	int teste;
 	int chute;
 	
 	printf("Digite seu chute:");
