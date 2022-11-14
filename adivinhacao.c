@@ -16,6 +16,8 @@ int main (){
 
 		int acertou = (chute == numeroSecreto);
 
+		printf("teste");
+
 		if(acertou){
 			printf("Você acertou, parabéns!\n\n");
 		} else {

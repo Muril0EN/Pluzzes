@@ -10,6 +10,7 @@ int main(){
     int chute;
     int portaPremiada;
     int portaErrada;
+    int trocar = 0;
 
     printf("Atrás de uma dessas portas há uma barra de ouro, \n atrás das outras duas, duas lixeiras\n\n");
 
