@@ -8,18 +8,18 @@ int main (){
 /*comentário de bloco*/	
 	int numeroSecreto = 3;
 	int chute;
-	
-	for(int i = 0; i < 3; i++){
+
+	for(int i = 1; i <= 3; i++){
 		printf(" * Tentativa %d de 3 *\n", i);
 		printf("Digite seu chute:");
 		scanf("%d", &chute);
 
 		int acertou = (chute == numeroSecreto);
 
-		printf("teste");
-
 		if(acertou){
 			printf("Você acertou, parabéns!\n\n");
+			
+			break; /*parar a execução*/
 		} else {
 			int maior = (numeroSecreto < chute);
 			if (maior){
@@ -29,4 +29,5 @@ int main (){
 			}
 		}
 	}
+	printf("Fim de jogo!\n");
 }
