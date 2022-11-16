@@ -8,11 +8,10 @@ int main (){
 /*comentário de bloco*/	
 	int numeroSecreto = 3;
 	int chute;
-	int ganhou = 0;
-	int tentativas = 0;
+	int tentativas = 1;
 
-	while (ganhou == 0){
-		printf(" * Tentativa %d *\n", tentativas + 1);/*ajuste pq tentativas é declarado como 0*/
+	while (1){ /*sintaxe para looping infinito*/
+		printf(" * Tentativa %d *\n", tentativas);/*ajuste pq tentativas é declarado como 0*/
 		printf("Digite seu chute:");
 		scanf("%d", &chute);
 
@@ -29,7 +28,7 @@ int main (){
 		if(acertou){
 			printf("Você acertou, parabéns!\n\n");
 			
-			ganhou = 1; /*booleano equivalente ao 'break'*/
+			break;/*usar quando houver looping infinito*/
 		} 
 		
 		else if (maior){ /*quando se 'combina' else if elimina verificações desnecessárias*/
