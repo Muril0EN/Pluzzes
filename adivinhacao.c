@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+#define NUMERO_DE_TENTATIVAS 5 /*diretiva-> uma constante. Seguir padrão de sintaxe #define NOME_EM_LETRAS_MAIÚSCULAS(convenção)*/
+
 int main (){
 	printf("************************************\n");
 	printf("* Bem vindo ao jogo de adivinhação *\n");
@@ -8,9 +10,9 @@ int main (){
 /*comentário de bloco*/	
 	int numeroSecreto = 3;
 	int chute;
-
-	for(int i = 1; i <= 3; i++){
-		printf(" * Tentativa %d de 3 *\n", i);
+	
+	for(int i = 1; i <= NUMERO_DE_TENTATIVAS; i++){
+		printf(" * Tentativa %d de %d *\n", i, NUMERO_DE_TENTATIVAS);
 		printf("Digite seu chute:");
 		scanf("%d", &chute);
 
