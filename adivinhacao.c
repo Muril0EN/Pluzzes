@@ -44,7 +44,7 @@ int main (){
 
 		tentativas++;
 
-		int pontosPerdidos = (chute - numeroSecreto) / 2;
+		int pontosPerdidos = (chute - numeroSecreto) / 2; /*essa operação cria um bug pois a divisão de inteiros vai igonorar os decimais e devolver valor errado para a pontuação.*/
 		pontos = pontos - pontosPerdidos;	
 	}
 
