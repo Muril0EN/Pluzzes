@@ -8,7 +8,8 @@ int main (){
 /*comentário de bloco*/	
 	int numeroSecreto = 42;
 
-	int chute;
+	int chute; /*quando uma variável é usada, ela já foi inicializada (mesmo que indiretamente)*/
+	printf("chute %d\n", chute); /*retorna o número referente á região de memória do programa anterior. Esse valor será usado no programa caso a variável não tenha sido inicializada.*/
 	int tentativas = 1;
 
 	int pontos = 1000;
