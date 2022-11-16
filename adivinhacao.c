@@ -6,9 +6,12 @@ int main (){
 	printf("************************************\n");
 //comentário de linha 	
 /*comentário de bloco*/	
-	int numeroSecreto = 3;
+	int numeroSecreto = 42;
+
 	int chute;
 	int tentativas = 1;
+
+	int pontos = 1000;
 
 	while (1){ /*sintaxe para looping infinito*/
 		printf(" * Tentativa %d *\n", tentativas);/*ajuste pq tentativas é declarado como 0*/
@@ -38,9 +41,13 @@ int main (){
 			printf("Você errou, seu chute foi menor que o número secreto.\n\n");
 		}
 
-		tentativas++;	
+		tentativas++;
+
+		int pontosPerdidos = (chute - numeroSecreto) / 2;
+		pontos = pontos - pontosPerdidos;	
 	}
 
 	printf("Fim de jogo!\n");
 	printf("Você acertou em %d tentativas!\n", tentativas);
+	printf("Total de pontos: %d\n", pontos);
 }
