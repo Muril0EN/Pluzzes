@@ -17,19 +17,22 @@ int main (){
 		scanf("%d", &chute);
 
 		int acertou = (chute == numeroSecreto);
+		int maior = chute > numeroSecreto;
+		int menor = chute < numeroSecreto;
 
 		if(acertou){
 			printf("Você acertou, parabéns!\n\n");
 			
 			break; /*parar a execução*/
-		} else {
-			int maior = (numeroSecreto < chute);
-			if (maior){
+		} 
+		
+		else if (maior){ /*quando se 'combina' else if elimina verificações desnecessárias*/
 				printf("Você errou, seu chute foi maior que o número secreto.\n\n");
-			} else {
-				printf("Você errou, seu chute foi menor que o número secreto.\n\n");
-			}
 		}
+		else {
+				printf("Você errou, seu chute foi menor que o número secreto.\n\n");
+		}
+		
 	}
 	printf("Fim de jogo!\n");
 }
