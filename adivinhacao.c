@@ -12,7 +12,7 @@ int main (){
 	printf("chute %d\n", chute); /*retorna o número referente á região de memória do programa anterior. Esse valor será usado no programa caso a variável não tenha sido inicializada.*/
 	int tentativas = 1;
 
-	int pontos = 1000;
+	double pontos = 1000;
 
 	while (1){ /*sintaxe para looping infinito*/
 		printf(" * Tentativa %d *\n", tentativas);/*ajuste pq tentativas é declarado como 0*/
@@ -44,11 +44,18 @@ int main (){
 
 		tentativas++;
 
-		double pontosPerdidos = (chute - numeroSecreto) / 2.0; /*essa operação cria um bug pois a divisão de inteiros vai igonorar os decimais e devolver valor errado para a pontuação.*/
+		double pontosPerdidos = (chute - numeroSecreto) / (double)2; /*essa operação cria um bug pois a divisão de inteiros vai igonorar os decimais e devolver valor errado para a pontuação.*/
 		pontos = pontos - pontosPerdidos;	
 	}
 
 	printf("Fim de jogo!\n");
 	printf("Você acertou em %d tentativas!\n", tentativas);
-	printf("Total de pontos: %.1f\n", pontos); /*ajuste do número de casas decimais*/
+	printf("Total de pontos: %.1f\n", pontos); /*ajuste do número de casas decimais no %.xf, onde x = casas decimais*/
 }
+/*Inteiros*/
+	/*short = 2 bytes*/
+	/*int = 4 bytes = 32bits ou 2**32*/
+	/*long = 8 bytes = 64bits ou 2**64*/
+/*decimais*/
+	/*doble = 8 bytes = 64bits ou 2**64*/
+	/*float = 4 bytes = 32bits ou 2**32*/
