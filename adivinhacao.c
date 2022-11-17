@@ -1,12 +1,20 @@
 #include <stdio.h>
+#include <stdlib.h> /*biblioteca onde está a função abs() -> função que estrai número absoluto*/
+#include <time.h> /*biblioteca onde está a função time*/
 
 int main (){
 	printf("************************************\n");
 	printf("* Bem vindo ao jogo de adivinhação *\n");
 	printf("************************************\n");
 //comentário de linha 	
-/*comentário de bloco*/	
-	int numeroSecreto = 42;
+/*comentário de bloco*/
+/*Gerando numeros randomicos*/	
+	int segundos = time(0);/*a função time(0) retorna o número de segundos desde 1 de janeiro de 1970 (EPOCH)*/
+	srand(segundos);/*essa função é a semente para função rand()*/
+	
+	int numeroGrande = rand(); /*vai devolver número aleatório pq tem semente do srand() que muda sempre*/
+
+	int numeroSecreto = numeroGrande % 100; /*usando a operação de resto da divisão (%) conseguimos controlar o tamanho do número*/
 
 	int chute; /*quando uma variável é usada, ela já foi inicializada (mesmo que indiretamente)*/
 	printf("chute %d\n", chute); /*retorna o número referente á região de memória do programa anterior. Esse valor será usado no programa caso a variável não tenha sido inicializada.*/
@@ -44,8 +52,8 @@ int main (){
 
 		tentativas++;
 
-		double pontosPerdidos = (chute - numeroSecreto) / (double)2; /*essa operação cria um bug pois a divisão de inteiros vai igonorar os decimais e devolver valor errado para a pontuação.*/
-		pontos = pontos - pontosPerdidos;	
+		double pontosPerdidos = abs(chute - numeroSecreto) / (double)2; /* a conversão de variáveis é chamada de casting*/
+		pontos = pontos - pontosPerdidos;	/*função abs(), usada na linha superior, extrai número absoluto. Ou seja, sempre devolve um número positivo*/
 	}
 
 	printf("Fim de jogo!\n");
