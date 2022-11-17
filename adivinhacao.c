@@ -44,11 +44,11 @@ int main (){
 
 		tentativas++;
 
-		int pontosPerdidos = (chute - numeroSecreto) / 2; /*essa operação cria um bug pois a divisão de inteiros vai igonorar os decimais e devolver valor errado para a pontuação.*/
+		double pontosPerdidos = (chute - numeroSecreto) / 2.0; /*essa operação cria um bug pois a divisão de inteiros vai igonorar os decimais e devolver valor errado para a pontuação.*/
 		pontos = pontos - pontosPerdidos;	
 	}
 
 	printf("Fim de jogo!\n");
 	printf("Você acertou em %d tentativas!\n", tentativas);
-	printf("Total de pontos: %d\n", pontos);
+	printf("Total de pontos: %.1f\n", pontos); /*ajuste do número de casas decimais*/
 }
