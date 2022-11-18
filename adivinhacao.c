@@ -27,14 +27,20 @@ int main (){
 	printf("Escolha: ");
 	scanf("%d", &nivel);
 
-
 	int numerodetentativas;
-	if(nivel == 1){
-		numerodetentativas = 20;
-	} else if (nivel == 2){
-		numerodetentativas = 15;
-	} else {
-		numerodetentativas = 6;
+
+	switch (nivel){ /*esse comando executa todas as linhas...*/
+		case 1:
+			numerodetentativas = 20;
+			break; /*... por isso o break, no final de cada 'case' é obrigatório quando usado o 'switch*/
+		
+		case 2:
+			numerodetentativas = 15;
+			break;
+	
+		default: /*equivalente ao else*/
+			numerodetentativas = 6;
+			break;
 	}
 
 	for (int i = 1; i <= numerodetentativas; i++) {
