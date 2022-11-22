@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
 int main () {
@@ -15,17 +14,37 @@ int main () {
     int acertou = 0;
     int enforcou = 0;
 
-    do {
-        char chute;/* code */
-        scanf("%c", &chute);
+    char chutes[26]; //tamanho do alfabeto estendido
+    int tentativas = 0; 
 
-        for(int i = 0; i < strlen(palavraSecreta); i++) {
-            if(palavraSecreta[i] == chute){
-                printf("A posição %d tem essa letra!\n", i);
+    do {
+
+        for (int i = 0; i < strlen(palavraSecreta); i++) {//função strlen devolve o tamanho do array
+            
+            int achou = 0;
+
+            for (int j = 0; j < tentativas; j++){
+                if(chutes[j] == palavraSecreta[i]){
+                    achou = 1;
+                    break;
+                }
             }
+
+                if(achou){
+                    printf("%c ", palavraSecreta[i]);
+                } else {   
+                    printf("_ ");
+                }
         }
+        printf("\n");
+        
+        char chute;
+        printf("Qual letra? ");
+        scanf(" %c", &chute); //comando para ignorar o 'enter' pq fica o 'enter' fica no buffer (só necessário em algoritmos com char)
+
+        chutes[tentativas] = chute;
+        tentativas++;
+
     } while (!acertou && !enforcou); // = (acertou == 0 && enforcou == 0), isso pq '!' é operador de negação.
     
-    
-
 }
