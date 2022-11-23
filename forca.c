@@ -7,19 +7,17 @@ void abertura () {
     printf("*         Jogo de forca        *\n");
     printf("********************************\n\n");
 }
-
-void chuta (char chutes[26], int tentativas) { //sintaxe para declaração de parametros -> tipo nome
+//declaração da função fora da função principal
+void chuta (char chutes[26], int* tentativas) { //sintaxe para declaração de parametros -> tipo nome
     char chute;
     scanf(" %c", &chute); //comando para ignorar o 'enter' pq fica o 'enter' fica no buffer (só necessário em algoritmos com char)
 
-    chutes[tentativas] = chute;
+    chutes[*tentativas] = chute;
+    (*tentativas)++; //incremento no conteúdo ponteiro
 }
 
 int main () {
-//não existem strings na linguagem C! 
-// a saída é usar uma lista (array) de caracteres (char)
-// sintaxe para declarar-> tipo nome [tamanho];
-// sintaxe para atribuir-> nome [posição] = 10; (semelhante para imprimir) 
+ 
     char palavraSecreta [20];
 //imprimir array
     sprintf(palavraSecreta, "melancia"); //função que ajuda a escrever palavras dentro de arrays de chars
@@ -55,9 +53,9 @@ int main () {
         }
         printf("\n");
         
-        chuta(chutes, tentativas);
-        tentativas++;
-        
+        chuta(chutes, &tentativas); //para usar o endereço de memória da variável tentativas, para entregar o valor desse endereço para a função
+        //tentativas++;//esse passo deve estar dentro da função (boa prática)
+
     } while (!acertou && !enforcou); // = (acertou == 0 && enforcou == 0), isso pq '!' é operador de negação.
     
 }
