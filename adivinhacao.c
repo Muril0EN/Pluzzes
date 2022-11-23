@@ -6,9 +6,11 @@ int main (){
 	printf("************************************\n");
 	printf("* Bem vindo ao jogo de adivinhação *\n");
 	printf("************************************\n");
+//para imprimir uma barra no código-> //
 //comentário de linha 	
 /*comentário de bloco*/
 /*Gerando numeros randomicos*/	
+
 	int segundos = time(0);/*a função time(0) retorna o número de segundos desde 1 de janeiro de 1970 (EPOCH)*/
 	srand(segundos);/*essa função é a semente para função rand()*/
 	
