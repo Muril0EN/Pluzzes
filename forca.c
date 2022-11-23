@@ -1,6 +1,20 @@
 #include <stdio.h>
 #include <string.h>
 
+//declaração da função -> funções facilitam a leitura manutenção, reutilização de códigos 
+void abertura () {
+    printf("********************************\n");
+    printf("*         Jogo de forca        *\n");
+    printf("********************************\n\n");
+}
+
+void chuta (char chutes[26], int tentativas) { //sintaxe para declaração de parametros -> tipo nome
+    char chute;
+    scanf(" %c", &chute); //comando para ignorar o 'enter' pq fica o 'enter' fica no buffer (só necessário em algoritmos com char)
+
+    chutes[tentativas] = chute;
+}
+
 int main () {
 //não existem strings na linguagem C! 
 // a saída é usar uma lista (array) de caracteres (char)
@@ -16,6 +30,9 @@ int main () {
 
     char chutes[26]; //tamanho do alfabeto estendido
     int tentativas = 0; 
+
+    //abertura
+    abertura(); //chamada de função de clarada na linha 4;
 
     do {
 
@@ -38,13 +55,9 @@ int main () {
         }
         printf("\n");
         
-        char chute;
-        printf("Qual letra? ");
-        scanf(" %c", &chute); //comando para ignorar o 'enter' pq fica o 'enter' fica no buffer (só necessário em algoritmos com char)
-
-        chutes[tentativas] = chute;
+        chuta(chutes, tentativas);
         tentativas++;
-
+        
     } while (!acertou && !enforcou); // = (acertou == 0 && enforcou == 0), isso pq '!' é operador de negação.
     
 }
