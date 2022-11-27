@@ -14,7 +14,7 @@ void chuta (char chutes[26], int* tentativas) { //sintaxe para declaração de p
 
     chutes[*tentativas] = chute;
     (*tentativas)++; //incremento no conteúdo ponteiro
-}
+} //**** a razão para a variável chutes não ter sido reescrita é pq um array já é um ponteiro.
 
 int main () {
  
