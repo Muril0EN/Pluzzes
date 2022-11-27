@@ -15,6 +15,19 @@ void chuta (char chutes[26], int* tentativas) { //sintaxe para declaração de p
     chutes[*tentativas] = chute;
     (*tentativas)++; //incremento no conteúdo ponteiro
 } //**** a razão para a variável chutes não ter sido reescrita é pq um array já é um ponteiro.
+//funcções 'void' não devolve nada. Aqui precisamos devolver um inteiro
+int jaChutou (char letra, char chutes [26], int tentativas){
+    int achou = 0;
+    
+    for (int j = 0; j < tentativas; j++){
+        if(chutes[j] == letra){
+            achou = 1;
+            break;
+        }
+    }
+
+    return achou;
+}
 
 int main () {
  
@@ -36,14 +49,8 @@ int main () {
 
         for (int i = 0; i < strlen(palavraSecreta); i++) {//função strlen devolve o tamanho do array
             
-            int achou = 0;
-
-            for (int j = 0; j < tentativas; j++){
-                if(chutes[j] == palavraSecreta[i]){
-                    achou = 1;
-                    break;
-                }
-            }
+            //retorno da função jaChutou atribuído à variável achou;
+            int achou = jaChutou(palavraSecreta[i], chutes, tentativas);
 
                 if(achou){
                     printf("%c ", palavraSecreta[i]);
