@@ -29,11 +29,31 @@ int jaChutou (char letra, char chutes [26], int tentativas){
     return achou;
 }
 
+void desenhaForca(char palavraSecreta[20], char chutes [26], int tentativas) {
+
+    for (int i = 0; i < strlen(palavraSecreta); i++) {//função strlen devolve o tamanho do array
+            
+            //retorno da função jaChutou atribuído à variável achou;
+            int achou = jaChutou(palavraSecreta[i], chutes, tentativas);
+
+            if(achou){
+                printf("%c ", palavraSecreta[i]);
+            } else {   
+                printf("_ ");
+            }
+        }
+        printf("\n");
+}
+
+void escolhePalavra (char palavraSecreta[20]){
+    sprintf(palavraSecreta, "melancia");
+}
+
 int main () {
  
     char palavraSecreta [20];
-//imprimir array
-    sprintf(palavraSecreta, "melancia"); //função que ajuda a escrever palavras dentro de arrays de chars
+    
+     //função que ajuda a escrever palavras dentro de arrays de chars
     //printf("%s\n", palavraSecreta); //%s usado para imprimir array de char 
 
     int acertou = 0;
@@ -42,24 +62,12 @@ int main () {
     char chutes[26]; //tamanho do alfabeto estendido
     int tentativas = 0; 
 
-    //abertura
+    escolhePalavra (palavraSecreta);
     abertura(); //chamada de função de clarada na linha 4;
 
     do {
 
-        for (int i = 0; i < strlen(palavraSecreta); i++) {//função strlen devolve o tamanho do array
-            
-            //retorno da função jaChutou atribuído à variável achou;
-            int achou = jaChutou(palavraSecreta[i], chutes, tentativas);
-
-                if(achou){
-                    printf("%c ", palavraSecreta[i]);
-                } else {   
-                    printf("_ ");
-                }
-        }
-        printf("\n");
-        
+        desenhaForca(palavraSecreta, chutes, tentativas);
         chuta(chutes, &tentativas); //para usar o endereço de memória da variável tentativas, para entregar o valor desse endereço para a função
         //tentativas++;//esse passo deve estar dentro da função (boa prática)
 
