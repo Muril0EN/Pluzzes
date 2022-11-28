@@ -52,6 +52,16 @@ void escolhePalavra (char palavraSecreta[20]){
     sprintf(palavraSecreta, "melancia");
 }
 
+int acertou () {
+    for (int i = 0; i < strlen(palavraSecreta); i++) {
+        if (!jaChutou(palavraSecreta[i])) {
+            return 0;
+        }
+        
+    }
+    return 1;
+}
+
 int enforcou (){
 
     int erros = 0;
@@ -71,17 +81,9 @@ int enforcou (){
     }
 
     return erros >= 5;
-
 }
 
 int main () {
-
-    //variáveis movidas para inicio para que sejam lidas como globais
-    // char palavraSecreta [20];
-    // char chutes[26]; 
-    // int tentativas = 0; 
-
-    int acertou = 0;
 
     escolhePalavra (palavraSecreta);
     abertura(); 
@@ -91,6 +93,6 @@ int main () {
         desenhaForca(palavraSecreta, chutes, chutesDados);
         chuta(chutes, &chutesDados); 
 
-    } while (!acertou && !enforcou());
+    } while (!acertou() && !enforcou()); //invocando ambas as funções ("negando-as")
     
 }
