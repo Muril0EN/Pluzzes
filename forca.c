@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <string.h>
 
-//variáveis declaradas fora de todas as funções são variáveis globais e podem ser usadas em qualquer função
-//dispensa ponteiros 
-//** deve ser usada com parcimônia pq é possível que se perca o controle dessa variável. Quanto menos for usado, melhor.
+// O compilador do C chama as funções em ordem. Assim, caso se erre na ordenação ocorre um erro
+//para evitar esse problema, colaca-se todas as assinaturas em outro arquivo, como headerfile
+
+#include "forca.h"
+
 char palavraSecreta [20];
 char chutes[26]; 
 int chutesDados = 0; 
@@ -56,8 +58,7 @@ int acertou () {
     for (int i = 0; i < strlen(palavraSecreta); i++) {
         if (!jaChutou(palavraSecreta[i])) {
             return 0;
-        }
-        
+        }    
     }
     return 1;
 }
