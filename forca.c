@@ -6,7 +6,7 @@
 //** deve ser usada com parcimônia pq é possível que se perca o controle dessa variável. Quanto menos for usado, melhor.
 char palavraSecreta [20];
 char chutes[26]; 
-int tentativas = 0; 
+int chutesDados = 0; 
 
 void abertura () {
     printf("********************************\n");
@@ -18,13 +18,13 @@ void chuta () {
     char chute;
     scanf(" %c", &chute); 
 
-    chutes[tentativas] = chute;
-    (tentativas)++; 
+    chutes[chutesDados] = chute;
+    (chutesDados)++; 
 } 
 int jaChutou (char letra){
     int achou = 0;
     
-    for (int j = 0; j < tentativas; j++){
+    for (int j = 0; j < chutesDados; j++){
         if(chutes[j] == letra){
             achou = 1;
             break;
@@ -52,6 +52,28 @@ void escolhePalavra (char palavraSecreta[20]){
     sprintf(palavraSecreta, "melancia");
 }
 
+int enforcou (){
+
+    int erros = 0;
+
+    for (int i = 0; i < chutesDados; i++){
+        int existe = 0;
+
+        for (int j = 0; j < strlen(palavraSecreta); j++){
+            if(chutes[i] == palavraSecreta[j]){
+
+            existe = 1;
+            break;
+            }
+        }
+
+        if (!existe) erros++;
+    }
+
+    return erros >= 5;
+
+}
+
 int main () {
 
     //variáveis movidas para inicio para que sejam lidas como globais
@@ -60,16 +82,15 @@ int main () {
     // int tentativas = 0; 
 
     int acertou = 0;
-    int enforcou = 0;
 
     escolhePalavra (palavraSecreta);
     abertura(); 
 
     do {
 
-        desenhaForca(palavraSecreta, chutes, tentativas);
-        chuta(chutes, &tentativas); 
+        desenhaForca(palavraSecreta, chutes, chutesDados);
+        chuta(chutes, &chutesDados); 
 
-    } while (!acertou && !enforcou);
+    } while (!acertou && !enforcou());
     
 }
