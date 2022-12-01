@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+#include <time.h>
 
 // O compilador do C chama as funções em ordem. Assim, caso se erre na ordenação ocorre um erro
 //para evitar esse problema, colaca-se todas as assinaturas em outro arquivo, como headerfile
@@ -50,8 +52,23 @@ void desenhaForca() {
         printf("\n");
 }
 
-void escolhePalavra (char palavraSecreta[20]){
-    sprintf(palavraSecreta, "melancia");
+void escolhePalavra (){
+    FILE* f; 
+
+    f = fopen("palavra.txt", "r"); //r = read
+
+    int qtdDePalavras;
+    fscanf(f, "%d", &qtdDePalavras);
+
+    srand(time(0));
+    int randomico = rand() % qtdDePalavras; 
+
+    for (int i = 0; i <= randomico; i++){
+        fscanf(f, "%s", palavraSecreta);
+    }
+    
+
+    fclose(f); //fechar arquivo
 }
 
 int acertou () {
