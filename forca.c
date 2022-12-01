@@ -53,25 +53,25 @@ void desenhaForca() {
 }
 
 void escolhePalavra (){
-    FILE* f; 
+    FILE* arquivo; //ponteiro para o arquivo que vai ser guardado na variável "arquivo"
 
-    f = fopen("palavras.txt", "r"); //r = read
-    if(f == 0){
+    arquivo = fopen("palavras.txt", "r"); //fopen("nomedoarquivo.txt") é a função que abre um arquivo de texto qualquer. r = read
+    if(arquivo == 0){
         printf("Desculpe, banco de dados não disponível.\n\n");
-        exit(1);
+        exit(1); //'matar o programa'
     }
 
-    int qtdDePalavras;
-    fscanf(f, "%d", &qtdDePalavras);
+    int qtdDePalavras;//variável que vai salvar quantidade de palavras (declarada na primeira linha do arquivo)
+    fscanf(arquivo, "%d", &qtdDePalavras);//fscanf(arquivo, tipo, &variavel que vai receber o valor lido) -> ler de arquivo
 
-    srand(time(0));
-    int randomico = rand() % qtdDePalavras; 
+    srand(time(0));//semente para função hand()
+    int randomico = rand() % qtdDePalavras; // variável que vai receber o valor do resto da divisão da função rand pela quantidade de palavras
 
     for (int i = 0; i <= randomico; i++){
-        fscanf(f, "%s", palavraSecreta);
+        fscanf(arquivo, "%s", palavraSecreta);//->função lê arquivo, do tipo string, guarda na variável palavraSecreta
     }
 
-    fclose(f); //fechar arquivo
+    fclose(arquivo); //fechar arquivo
 }
 
 int acertou () {
