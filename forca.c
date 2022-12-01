@@ -55,7 +55,11 @@ void desenhaForca() {
 void escolhePalavra (){
     FILE* f; 
 
-    f = fopen("palavra.txt", "r"); //r = read
+    f = fopen("palavras.txt", "r"); //r = read
+    if(f == 0){
+        printf("Desculpe, banco de dados não disponível.\n\n");
+        exit(1);
+    }
 
     int qtdDePalavras;
     fscanf(f, "%d", &qtdDePalavras);
@@ -66,7 +70,6 @@ void escolhePalavra (){
     for (int i = 0; i <= randomico; i++){
         fscanf(f, "%s", palavraSecreta);
     }
-    
 
     fclose(f); //fechar arquivo
 }
@@ -85,6 +88,7 @@ int enforcou (){
     int erros = 0;
 
     for (int i = 0; i < chutesDados; i++){
+
         int existe = 0;
 
         for (int j = 0; j < strlen(palavraSecreta); j++){
