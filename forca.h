@@ -1,3 +1,6 @@
+#define TAMANHO_PALAVRA 20
+
+void adicionaPalavra();
 void abertura();
 void chuta();
 void desenhaForca();

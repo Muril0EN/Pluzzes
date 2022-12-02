@@ -8,7 +8,7 @@
 
 #include "forca.h"
 
-char palavraSecreta [20];
+char palavraSecreta [TAMANHO_PALAVRA];
 char chutes[26]; 
 int chutesDados = 0; 
 
@@ -50,6 +50,41 @@ void desenhaForca() {
             }
         }
         printf("\n");
+}
+
+void adicionaPalavra(){
+    
+    char quer;
+    
+    printf("Você deseja adicionar uma nova palavra ao jogo? (S/N)");
+    scanf(" %c", &quer);
+
+    if (quer == 'S') {
+        
+        char novaPalavra[TAMANHO_PALAVRA];
+        printf("Qual a nova palavra? ");
+        scanf("%s", novaPalavra);
+
+        FILE* arquivo;
+
+        arquivo = fopen("palavras.txt", "r+");//r+ = adiciona permisão de leitura e escrita
+        if (arquivo == 0){
+            printf("Desculpe, banco de dados não disponível.\n\n");
+            exit(1);
+        }
+
+        int qtd;
+        fscanf(arquivo, "%d", &qtd); //lê quantidade de linhas do arquivo e atribuí esse valor à variável declarada (qtd)
+        qtd++; //adiciona à variável 
+
+        fseek(arquivo, 0, SEEK_SET); //move (fseek) o registrador para o inicio do arquivo (seek_set)
+        fprintf(arquivo, "%d", qtd);//sobescreve para atualizar o valor contido na primeira linha usando a variável 
+        
+        fseek(arquivo, 0, SEEK_END); //move o registrador para o final do arquivo
+        fprintf(arquivo, "\n%s", novaPalavra);//move o registrador (fseek) e adiciona/escreve 'novapalavra' no final do arquivo (seek_end)
+
+        fclose(arquivo);
+    }
 }
 
 void escolhePalavra (){
@@ -117,4 +152,5 @@ int main () {
 
     } while (!acertou() && !enforcou()); //invocando ambas as funções ("negando-as")
     
+    adicionaPalavra();   
 }
