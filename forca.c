@@ -12,6 +12,54 @@ char palavraSecreta [TAMANHO_PALAVRA];
 char chutes[26]; 
 int chutesDados = 0; 
 
+
+int letraExiste(char letra) {
+
+    for (int j = 0; j < strlen(palavraSecreta); j++) {
+        if(letra == palavraSecreta[j]){
+            return 1;
+        }
+    }
+    
+    return 0;
+}
+
+int chutesErrados(){
+    int erros = 0;
+
+    for (int i = 0; i < chutesDados; i++){
+
+        int existe = 0;
+
+        for (int j = 0; j < strlen(palavraSecreta); j++){
+            if(chutes[i] == palavraSecreta[j]){
+
+            existe = 1;
+            break;
+            }
+        }
+
+        if (!existe) erros++;
+    }
+
+    return erros;
+
+}
+
+int enforcou (){
+
+    return chutesErrados() >= 5;
+}
+
+int ganhou () {
+    for (int i = 0; i < strlen(palavraSecreta); i++) {
+        if (!jaChutou(palavraSecreta[i])) {
+            return 0;
+        }    
+    }
+    return 1;
+}
+
 void abertura () {
     printf("********************************\n");
     printf("*         Jogo de forca        *\n");
@@ -25,6 +73,7 @@ void chuta () {
     chutes[chutesDados] = chute;
     (chutesDados)++; 
 } 
+
 int jaChutou (char letra){
     int achou = 0;
     
@@ -39,6 +88,22 @@ int jaChutou (char letra){
 }
 
 void desenhaForca() {
+    
+    int erros = chutesErrados();// função que usa implementação de if terário. sintaxe -> (condição ? instruçãoSeSim : instruçãoSeNão)
+
+    printf("  _______       \n");
+    printf(" |/      |      \n");
+    printf(" |      %c%c%c  \n" , (erros >= 1 ? '(' : ' '),
+        (erros >= 1 ? '_' : ' '), (erros >= 1 ? ')' : ' ')); //aplicando 'if ternários  
+    printf(" |      %c%c%c  \n", (erros >= 3 ? '\\' : ' '), 
+        (erros >= 2 ? '|' : ' '), (erros >= 3 ? '/' : ' '));
+    printf(" |       %c     \n", (erros >= 2 ? '|' : ' '));
+    printf(" |      %c %c   \n", (erros >= 4 ? '/' : ' '), 
+        (erros >= 4 ? '\\' : ' '));
+    printf(" |              \n");
+    printf("_|_             \n");
+    printf("\n\n");
+
     for (int i = 0; i < strlen(palavraSecreta); i++) {
             
             int achou = jaChutou(palavraSecreta[i]);
@@ -109,37 +174,6 @@ void escolhePalavra (){
     fclose(arquivo); //fechar arquivo
 }
 
-int acertou () {
-    for (int i = 0; i < strlen(palavraSecreta); i++) {
-        if (!jaChutou(palavraSecreta[i])) {
-            return 0;
-        }    
-    }
-    return 1;
-}
-
-int enforcou (){
-
-    int erros = 0;
-
-    for (int i = 0; i < chutesDados; i++){
-
-        int existe = 0;
-
-        for (int j = 0; j < strlen(palavraSecreta); j++){
-            if(chutes[i] == palavraSecreta[j]){
-
-            existe = 1;
-            break;
-            }
-        }
-
-        if (!existe) erros++;
-    }
-
-    return erros >= 5;
-}
-
 int main () {
 
     escolhePalavra (palavraSecreta);
@@ -150,7 +184,14 @@ int main () {
         desenhaForca(palavraSecreta, chutes, chutesDados);
         chuta(chutes, &chutesDados); 
 
-    } while (!acertou() && !enforcou()); //invocando ambas as funções ("negando-as")
+    } while (!ganhou() && !enforcou()); //invocando ambas as funções ("negando-as")
     
+    if (ganhou()) {
+        printf("\nParabéns, você ganhou!\n\n");
+    } else {
+        printf("\nPuxa, você foi enforcado!\n");
+        printf("A palavra secreta era ** %s **\n\n", palavraSecreta);
+    }
+
     adicionaPalavra();   
 }
