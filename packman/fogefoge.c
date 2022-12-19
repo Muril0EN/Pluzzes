@@ -1,63 +1,29 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "fogeFoge.h"
+#include "fogeFoge.h" //biblioteca ****
+#include "mapa.h"
 
-MAPA m; // definindo o nome através da função 'typedef' no .h pode-se atribuir a struct a uma variável
-
-void leMapa (){
-    FILE* arquivo; //nome do arquivo
-    arquivo = fopen("mapa.txt", "r"); //lê arquivo
-    if(arquivo == 0) { //trata erro e fecha o programa em caso de problemas com o arquivo
-        printf("Erro na leitura do mapa!\n");
-        exit(1);
-    }
-
-    fscanf(arquivo, "%d %d", &(m.linhas), &(m.colunas)); //
-
-    alocaMapa();
-
-    for (int i = 0; i < 5; i++){
-        fscanf(arquivo, "%s", m.matriz[i]);
-    }
-    
-    fclose(arquivo);//fecha o arquivo
-}
-
-void alocaMapa(){
-    m.matriz = malloc(sizeof(char*) * m.linhas);//malloc -> alocação dinâmica de mem. / sizeoff -> informa qtd de bytes cada tipo de var precisa / * -> multiplica quantidade  que vai 'entrar'
-    
-    for(int i = 0; i < m.linhas; i++){// para cada linha
-        m.matriz[i] = malloc(sizeof(char) * (m.colunas + 1)); //alocar 'vezes' quantidade de colunas 
-    }
-}
-
-void liberaMapa (){
-    for(int i = 0; i < m.linhas; i++){//
-        free(m.matriz[i]);//liberar memória de cada uma das linhas (ponteiros)
-    }
-    free(m.matriz);
-}
+MAPA m; 
 
 int acabou(){
-    return 0; //jogo sem final, por enquanto
+    return 0;//o retorno 0 garante que o jogo não acabe;
 }
 
-void move(char direcao) {
-    int x;
-    int y;
+void mover(char direcao) {
+    int x;//inicialização da posição na horizontal; 
+    int y;//inicialização da posição na vertical;
 
-    //le a matrix e encontra a posição do herói
-    for (int i = 0; i < m.linhas; i++) {
-        for (int j = 0; i < m.colunas; i++) {
-            if (m.matriz[i][j] == '@') {
-                x = i;//posição herói
-                y = j;    
-                break;
+    for (int i = 0; i < m.linhas; i++) { //lê linhas
+        for (int j = 0; i < m.colunas; i++) { //lê colunas 
+            if (m.matriz[i][j] == '@') { //encontra herói
+                x = i;//atribui valor encontrado, referente a posição no eixo horizontal, à variável decalarada acima;
+                y = j;//idem anterior mas para o eixo vertical;
+                break;//interrompe a execução da fucnção
             }
         }
     }
     
-    switch (direcao){
+    switch (direcao){//if ternário para redução de código;
         case 'a':
             m.matriz[x][y-1] = '@';//esquerda
             break;
@@ -72,29 +38,23 @@ void move(char direcao) {
             break;
     }
 
-    m.matriz[x][y] = '.'; //substitui posição do packman por 'vazio'
+    m.matriz[x][y] = '.'; //substitui posição do packman por 'vazio' após movimentação do herói;
 
-}
-
-void imprimeMapa(){
-    for (int i = 0; i < 5; i++){//imprimir arquivo
-        printf("%s\n", m.matriz[i]);//
-    }
 }
 
 int main(){
 
-    leMapa();
+    leMapa(&m);//passa como parâmetro para a função 'leMapa' o endereço de memória da variável 'm';
     
     do { //loop principal
-        imprimeMapa();
+        imprimeMapa(&m);
 
-        char comando;
-        scanf(" %c", &comando);
+        char comando;//declaração da variável que vai receber o comando para mover o herói
+        scanf(" %c", &comando);//recebe do teclado o comando acima
         
-        move(comando);
+        mover(comando);//chama a função para mover o herói passando comando de input como parâmetro;
 
-    } while(!acabou());
+    } while(!acabou());//passa como parâmetro a negação da função acabou para o while (que sempre recebe um bool). 
     
-    liberaMapa();
+    liberaMapa(&m);//chama a função que libera mapa usando como parâmetro o ponteiro do mapa;
 }
