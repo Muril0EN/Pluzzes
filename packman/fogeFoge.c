@@ -4,6 +4,7 @@
 #include "mapa.h"
 
 MAPA m; 
+POSICAO heroi;
 
 int acabou(){
     return 0;//o retorno 0 garante que o jogo não acabe;
@@ -12,40 +13,35 @@ int acabou(){
 void mover(char direcao) {
     int x;//inicialização da posição na horizontal; 
     int y;//inicialização da posição na vertical;
-
-    for (int i = 0; i < m.linhas; i++) { //lê linhas
-        for (int j = 0; i < m.colunas; i++) { //lê colunas 
-            if (m.matriz[i][j] == '@') { //encontra herói
-                x = i;//atribui valor encontrado, referente a posição no eixo horizontal, à variável decalarada acima;
-                y = j;//idem anterior mas para o eixo vertical;
-                break;//interrompe a execução da fucnção
-            }
-        }
-    }
     
+    m.matriz[heroi.x][heroi.y] = '.'; //substitui posição do packman por 'vazio' após movimentação do herói;
+    
+
     switch (direcao){//if ternário para redução de código;
         case 'a':
             m.matriz[x][y-1] = '@';//esquerda
+            heroi.y--;
             break;
         case 'w':
             m.matriz[x-1][y] = '@';//pra cima 
+            heroi.x--;
             break;
         case 's':
             m.matriz[x+1][y] = '@';//pra baixo
+            heroi.x++;
             break;
         case 'd':
             m.matriz[x][y+1] = '@';//direita
+            heroi.y++;
             break;
     }
-
-    m.matriz[x][y] = '.'; //substitui posição do packman por 'vazio' após movimentação do herói;
-
 }
 
 int main(){
 
     leMapa(&m);//passa como parâmetro para a função 'leMapa' o endereço de memória da variável 'm';
-    
+    encontraMapa(&m, &heroi, '@');
+
     do { //loop principal
         imprimeMapa(&m);
 
