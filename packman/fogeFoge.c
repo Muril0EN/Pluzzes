@@ -20,26 +20,36 @@ void mover(char direcao) {
         return;//mata a função sem executar qualquer coisa
     }
     
-    m.matriz[heroi.x][heroi.y] = '.';
+    //atualiza os valores de posição
+    int proximox = heroi.x;
+    int proximoy = heroi.y;
 
-    switch (direcao){
+    switch (direcao){ //essa função agora atribui ás variáveis prox... valores que serão comparados para fins de validação
         case 'a':
-            m.matriz[heroi.x][heroi.y-1] = '@';
-            heroi.y--;
+            proximoy--;
             break;
         case 'w':
-            m.matriz[heroi.x-1][heroi.y] = '@'; 
-            heroi.x--;
+            proximox--;
             break;
         case 's':
-            m.matriz[heroi.x+1][heroi.y] = '@';
-            heroi.x++;
+            proximox++;
             break;
         case 'd':
-            m.matriz[heroi.x][heroi.y+1] = '@';
-            heroi.y++;
+            proximoy++;
             break;
-    }
+    }//nesse ponto o suite/case vai apontar para a posição desejada de destino
+    //define limites
+    if (proximox >= m.linhas)
+        return;
+    if (proximoy >= m.colunas)
+        return;
+    if(m.matriz[proximox][proximoy] != '.')//verifica se o espaço é diferente '.'
+        return;
+    //atualiza elemento na posição depois de passar por todas as condições
+    m.matriz[proximox][proximoy] = '@';//com heroi
+    m.matriz[heroi.x][heroi.y] = '.';//com ponto
+    heroi.x = proximox;//atualiza posição 'final'
+    heroi.y = proximoy;//atualiza posição 'final'
 }
 
 int main(){
