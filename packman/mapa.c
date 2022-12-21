@@ -24,7 +24,7 @@ void alocaMapa(MAPA* m){
     m->matriz = malloc(sizeof(char*) * m->linhas);
     
     for(int i = 0; i < m->linhas; i++){
-        m->matriz[i] = malloc(sizeof(char) * (m->colunas + 1)); 
+        m->matriz[i] = malloc(sizeof(char) * m->colunas + 1); 
     }
 }
 
@@ -43,7 +43,7 @@ void imprimeMapa(MAPA* m){
 
 void encontraMapa(MAPA* m, POSICAO* p, char c){
     for (int i = 0; i < m->linhas; i++) {
-        for (int j = 0; i < m->colunas; i++) { 
+        for (int j = 0; j < m->colunas; j++) { 
             if (m->matriz[i][j] == c) {
                 p->x = i;
                 p->y = j;
