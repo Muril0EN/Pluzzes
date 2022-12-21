@@ -11,6 +11,14 @@ int acabou(){
 }
 
 void mover(char direcao) {
+
+    //validar entrada do usuário
+    if (direcao != 'a' &&
+        direcao != 'w' &&
+        direcao != 's' &&
+        direcao != 'd') {
+        return;//mata a função sem executar qualquer coisa
+    }
     
     m.matriz[heroi.x][heroi.y] = '.';
 
