@@ -1,37 +1,34 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "fogeFoge.h" //biblioteca ****
+#include "fogeFoge.h"
 #include "mapa.h"
 
 MAPA m; 
 POSICAO heroi;
 
 int acabou(){
-    return 0;//o retorno 0 garante que o jogo não acabe;
+    return 0;
 }
 
 void mover(char direcao) {
-    int x;//inicialização da posição na horizontal; 
-    int y;//inicialização da posição na vertical;
     
-    m.matriz[heroi.x][heroi.y] = '.'; //substitui posição do packman por 'vazio' após movimentação do herói;
-    
+    m.matriz[heroi.x][heroi.y] = '.';
 
-    switch (direcao){//if ternário para redução de código;
+    switch (direcao){
         case 'a':
-            m.matriz[x][y-1] = '@';//esquerda
+            m.matriz[heroi.x][heroi.y-1] = '@';
             heroi.y--;
             break;
         case 'w':
-            m.matriz[x-1][y] = '@';//pra cima 
+            m.matriz[heroi.x-1][heroi.y] = '@'; 
             heroi.x--;
             break;
         case 's':
-            m.matriz[x+1][y] = '@';//pra baixo
+            m.matriz[heroi.x+1][heroi.y] = '@';
             heroi.x++;
             break;
         case 'd':
-            m.matriz[x][y+1] = '@';//direita
+            m.matriz[heroi.x][heroi.y+1] = '@';
             heroi.y++;
             break;
     }
@@ -39,18 +36,18 @@ void mover(char direcao) {
 
 int main(){
 
-    leMapa(&m);//passa como parâmetro para a função 'leMapa' o endereço de memória da variável 'm';
+    leMapa(&m);
     encontraMapa(&m, &heroi, '@');
 
-    do { //loop principal
+    do { 
         imprimeMapa(&m);
 
-        char comando;//declaração da variável que vai receber o comando para mover o herói
-        scanf(" %c", &comando);//recebe do teclado o comando acima
+        char comando;
+        scanf(" %c", &comando);
         
-        mover(comando);//chama a função para mover o herói passando comando de input como parâmetro;
+        mover(comando);
 
-    } while(!acabou());//passa como parâmetro a negação da função acabou para o while (que sempre recebe um bool). 
+    } while(!acabou()); 
     
-    liberaMapa(&m);//chama a função que libera mapa usando como parâmetro o ponteiro do mapa;
+    liberaMapa(&m);
 }
