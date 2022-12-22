@@ -1,2 +1,4 @@
 int acabou();
-void mover(char direção);
+void move(char direção);
+
+int ehDirecao(char direcao);

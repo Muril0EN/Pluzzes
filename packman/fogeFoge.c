@@ -10,17 +10,19 @@ int acabou(){
     return 0;
 }
 
-void mover(char direcao) {
+int ehDirecao(char direcao){
+    return 
+        direcao == 'a' ||
+        direcao == 'w' ||
+        direcao == 's' ||
+        direcao == 'd';
+}
 
-    //validar entrada do usuário
-    if (direcao != 'a' &&
-        direcao != 'w' &&
-        direcao != 's' &&
-        direcao != 'd') {
-        return;//mata a função sem executar qualquer coisa
-    }
-    
-    //atualiza os valores de posição
+void move(char direcao){
+
+    if(!ehDirecao(direcao))
+        return;
+
     int proximox = heroi.x;
     int proximoy = heroi.y;
 
@@ -39,15 +41,15 @@ void mover(char direcao) {
             break;
     }//nesse ponto o suite/case vai apontar para a posição desejada de destino
     //define limites
-    if (proximox >= m.linhas)
+    
+    if(!ehValida(&m, proximox, proximoy))
         return;
-    if (proximoy >= m.colunas)
-        return;
-    if(m.matriz[proximox][proximoy] != '.')//verifica se o espaço é diferente '.'
+    
+    if(!ehVazia(&m, proximox, proximoy))//verifica se o espaço é diferente '.'
         return;
     //atualiza elemento na posição depois de passar por todas as condições
-    m.matriz[proximox][proximoy] = '@';//com heroi
-    m.matriz[heroi.x][heroi.y] = '.';//com ponto
+    
+    andaNoMapa(&m, heroi.x, heroi.y, proximox, proximoy);
     heroi.x = proximox;//atualiza posição 'final'
     heroi.y = proximoy;//atualiza posição 'final'
 }
@@ -63,7 +65,7 @@ int main(){
         char comando;
         scanf(" %c", &comando);
         
-        mover(comando);
+        move(comando);
 
     } while(!acabou()); 
     
