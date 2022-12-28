@@ -27,16 +27,16 @@ void move(char direcao){
     int proximoy = heroi.y;
 
     switch (direcao){ //essa função agora atribui ás variáveis prox... valores que serão comparados para fins de validação
-        case 'a':
+        case ESQUERDA:
             proximoy--;
             break;
-        case 'w':
+        case CIMA:
             proximox--;
             break;
-        case 's':
+        case BAIXO:
             proximox++;
             break;
-        case 'd':
+        case DIREITA:
             proximoy++;
             break;
     }//nesse ponto o suite/case vai apontar para a posição desejada de destino
@@ -57,7 +57,7 @@ void move(char direcao){
 int main(){
 
     leMapa(&m);
-    encontraMapa(&m, &heroi, '@');
+    encontraMapa(&m, &heroi, HEROI);
 
     do { 
         imprimeMapa(&m);

@@ -65,7 +65,7 @@ int ehValida(MAPA* m, int x, int y){
 }
 
 int ehVazia(MAPA* m, int x, int y){
-    return m->matriz[x][y] == '.';
+    return m->matriz[x][y] == VAZIO;
 }
 
 void andaNoMapa(MAPA* m, int xOrigem, int yOrigem,
@@ -73,5 +73,5 @@ void andaNoMapa(MAPA* m, int xOrigem, int yOrigem,
     
     char personagem = m->matriz[xOrigem][yOrigem];
     m->matriz[xDestino][yDestino] = personagem;
-    m->matriz[xOrigem][yOrigem] = '.';
+    m->matriz[xOrigem][yOrigem] = VAZIO;
 }
