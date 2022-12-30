@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "mapa.h"
 
 void leMapa (MAPA* m){
@@ -28,6 +29,16 @@ void alocaMapa(MAPA* m){
     }
 }
 
+void copiaMapa(MAPA* destino, MAPA* origem){
+    destino->linhas = origem->linhas;
+    destino->colunas = origem->colunas;
+
+    alocaMapa(destino);
+    for (int i = 0; i < origem->linhas; i++) {
+        strcpy(destino->matriz[i], origem->matriz[i]);
+    }
+}
+
 void liberaMapa (MAPA* m){
     for(int i = 0; i < m->linhas; i++){
         free(m->matriz[i]);
@@ -42,17 +53,25 @@ void imprimeMapa(MAPA* m){
     }
 }
 
-void encontraMapa(MAPA* m, POSICAO* p, char c){
+int encontraMapa(MAPA* m, POSICAO* p, char c){
     
     for (int i = 0; i < m->linhas; i++) {
         for (int j = 0; j < m->colunas; j++) { 
             if (m->matriz[i][j] == c) {
                 p->x = i;
                 p->y = j;
-                return;
+                return 1;
             }
         }
     }
+    return 0;
+}
+
+int podeAndar(MAPA* m, char personagem, int x, int y){
+    return
+        ehValida(m, x, y) &&
+        !ehParede(m, x, y) &&
+        !ehPersonagem(m, personagem, x, y);
 }
 
 int ehValida(MAPA* m, int x, int y){
@@ -64,8 +83,15 @@ int ehValida(MAPA* m, int x, int y){
     return 1;
 }
 
-int ehVazia(MAPA* m, int x, int y){
-    return m->matriz[x][y] == VAZIO;
+int ehPersonagem(MAPA* m, char personagem, int x, int y){
+    return
+        m->matriz[x][y] == personagem;
+}
+
+int ehParede(MAPA* m, int x, int y){
+    return
+        m->matriz[x][y] == PAREDE_VETICAL ||
+        m->matriz[x][y] == PAREDE_HORIZONTAL;
 }
 
 void andaNoMapa(MAPA* m, int xOrigem, int yOrigem,
