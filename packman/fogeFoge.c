@@ -3,21 +3,23 @@
 #include "time.h"
 #include "fogeFoge.h"
 #include "mapa.h"
+#include "ui.h"
 
 MAPA m; 
 POSICAO heroi;
+int tempilula = 0;
 
 int acabou(){
     POSICAO pos;
     
-    int perdeu = !encontraMapa(&m, &pos, HEROI);
-    int ganhou = !encontraMapa(&m, &pos, FANTASMA);
+    int perdeu = !encontramapa(&m, &pos, HEROI);
+    int ganhou = !encontramapa(&m, &pos, FANTASMA);
 
     return ganhou || perdeu;
 
 }
 
-int ehDirecao(char direcao){
+int ehdirecao(char direcao){
     return 
         direcao == ESQUERDA ||
         direcao == CIMA ||
@@ -27,13 +29,10 @@ int ehDirecao(char direcao){
 
 void move(char direcao){
 
-    if(!ehDirecao(direcao))
-        return;
-
     int proximox = heroi.x;
     int proximoy = heroi.y;
 
-    switch (direcao) { //essa função agora atribui ás variáveis prox... valores que serão comparados para fins de validação
+    switch(direcao) { 
         case ESQUERDA:
             proximoy--;
             break;
@@ -46,32 +45,38 @@ void move(char direcao){
         case DIREITA:
             proximoy++;
             break;
-    }//nesse ponto o suite/case vai apontar para a posição desejada de destino
-    //define limites
-    
-    if(!podeAndar(&m, HEROI, proximox, proximoy));
+    }
+
+    if(!podeandar(&m, HEROI, proximox, proximoy));
         return;
 
-    andaNoMapa(&m, heroi.x, heroi.y, proximox, proximoy);
+    if(ehpersonagem(&m, PILULA, proximox, proximoy)){
+        tempilula = 1;
+    }
+
+    andanomapa(&m, heroi.x, heroi.y, proximox, proximoy);
     heroi.x = proximox;//atualiza posição 'final'
     heroi.y = proximoy;//atualiza posição 'final'
 }
 
-int praOndeFantasmaVai (int xAtual, int yAtual, int* xDestino, int* yDestino){
+int praondefantasmavai (int xatual, int yatual,
+    int* xdestino, int* ydestino){
+    
     int opcoes[4][2] = {
-        { xAtual, yAtual +1},
-        { xAtual +1, yAtual},
-        { xAtual -1, yAtual}
+        { xatual   , yatual +1 },
+        { xatual +1, yatual    },
+        { xatual   , yatual-1  },
+        { xatual-1,  yatual    }
     };
 
     srand(time(0));
     for(int i = 0; i < 10; i++){
         int posicao = rand() % 4;
             
-            if (podeAndar(&m, FANTASMA, opcoes[posicao][0], opcoes[posicao][1])) {
-                *xDestino = opcoes[posicao][0];
-                *yDestino = opcoes[posicao][1];
-
+            if (podeandar(&m, FANTASMA, opcoes[posicao][0],
+            opcoes[posicao][1])) {
+                *xdestino = opcoes[posicao][0];
+                *ydestino = opcoes[posicao][1];
                 return 1;
             }
     }
@@ -83,43 +88,71 @@ int praOndeFantasmaVai (int xAtual, int yAtual, int* xDestino, int* yDestino){
 void fantasmas(){
     MAPA copia;
 
-    copiaMapa(&copia, &m);
+    copiamapa(&copia, &m);
 
     for (int i = 0; i < copia.linhas; i++){
         for (int j = 0; j < copia.colunas; j++){
-            
             if(copia.matriz[i][j] == FANTASMA){
                 
-                int xDestino;
-                int yDestino;
+                int xdestino;
+                int ydestino;
 
-                int encontrou = praOndeFantasmaVai(i, j, &xDestino, &yDestino);
+                int encontrou = praondefantasmavai(i, j, &xdestino, &ydestino);
 
                 if(encontrou){
-                    andaNoMapa(&m, i, j, xDestino, yDestino);
+                    andanomapa(&m, i, j, xdestino, ydestino);
                 }
             }
         }
     }
 
-    liberaMapa(&copia);
+    liberamapa(&copia);
+}
+
+void explodepilula2(int x, int y, int somax, int somay, int qtd){
+
+    if(qtd == 0) return; //ponto de parada para a recursividade
+
+    int novox = x + somax;
+    int novoy = y + somay;
+
+    if(!ehvalida(&m, novox, novoy)) return;
+    if(ehparede(&m, novox, novoy)) return;
+
+    m.matriz[novox][novoy] = VAZIO;
+    explodepilula2(novox, novoy, somax, somay, qtd-1);//chamando a função 'dentro dela mesma', chamada de "função recursiva"
+}
+
+void explodepilula(){
+
+    if(!tempilula) return;
+
+    explodepilula2(heroi.x, heroi.y, 0, 1, 3);
+    explodepilula2(heroi.x, heroi.y, 0, -1, 3);
+    explodepilula2(heroi.x, heroi.y, 1, 0, 3);
+    explodepilula2(heroi.x, heroi.y, -1, 0, 3);
+
+    tempilula = 0;
 }
 
 int main(){
 
-    leMapa(&m);
-    encontraMapa(&m, &heroi, HEROI);
+    lemapa(&m);
+    encontramapa(&m, &heroi, HEROI);
 
     do { 
-        imprimeMapa(&m);
+        printf("Pílula: %s\n", (tempilula ? "Sim" : "Não"));//if ternário para controle da quantidade de bombas
+        imprimemapa(&m);
 
         char comando;
         scanf(" %c", &comando);
         
-        move(comando);
+        if(ehdirecao(comando)) move(comando);
+        if(comando == BOMBA) explodepilula();
+        
         fantasmas();
 
     } while(!acabou()); 
     
-    liberaMapa(&m);
+    liberamapa(&m);
 }
