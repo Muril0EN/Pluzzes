@@ -32,31 +32,31 @@ void move(char direcao){
     int proximox = heroi.x;
     int proximoy = heroi.y;
 
-    switch(direcao) { 
-        case ESQUERDA:
-            proximoy--;
-            break;
-        case CIMA:
-            proximox--;
-            break;
-        case BAIXO:
-            proximox++;
-            break;
-        case DIREITA:
-            proximoy++;
-            break;
+    switch(direcao) {
+            case ESQUERDA:
+                proximoy--;
+                break;
+            case CIMA:
+                proximox--;
+                break;
+            case BAIXO:
+                proximox++;
+                break;
+            case DIREITA:
+                proximoy++;
+                break;
     }
 
-    if(!podeandar(&m, HEROI, proximox, proximoy));
+    if(!podeandar(&m, HEROI, proximox, proximoy))
         return;
 
-    if(ehpersonagem(&m, PILULA, proximox, proximoy)){
-        tempilula = 1;
+    if(ehpersonagem(&m, HEROI, proximox, proximoy)){
+        tempilula=1;
     }
 
     andanomapa(&m, heroi.x, heroi.y, proximox, proximoy);
-    heroi.x = proximox;//atualiza posição 'final'
-    heroi.y = proximoy;//atualiza posição 'final'
+    heroi.x = proximox;
+    heroi.y = proximoy;
 }
 
 int praondefantasmavai (int xatual, int yatual,
